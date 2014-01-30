@@ -17,9 +17,26 @@ int currentObject;
 // Vertex IDs
 GLuint vaoID, vboID;
 // Vertices
-GLfloat vertexarray[]={0.5f,-0.5f,0.0f,0.0f,0.5f,0.0f,-0.5f,-0.5f,0.0f};
+GLfloat trianglevertexarray[]={
+	0.5f,-0.5f,0.0f,
+	0.0f,0.5f,0.0f,
+	-0.5f,-0.5f,0.0f
+};
+GLfloat squarevertexarray[]={
+	-0.5f,-0.5f,0.0f,
+	-0.5f,0.5f,0.0f,
+	0.5f,0.5f,0.0f,
+	0.5f,-0.5f,0.0f
+};
+GLfloat pentagonvertexarray[]={
+	-0.3f,-0.2f,0.0f,
+	-0.4f,0.0f,0.0f,
+	0.0f,-0.3f,0.0f,
+	0.3f,-0.2f,0.0f,
+	0.4f,0.0f,0.0f
+};
 // Indices of triangle
-GLubyte indices[3]={0,1,2};
+GLubyte indices[5]={0,1,2,3,4};
 
 // -----------------------------------------
 // --- O B J E C T   G E N E R A T I O N ---
@@ -32,7 +49,7 @@ void triangle(){
 
 	glGenBuffers(1, &vboID);	// Generates object name for the Vertex Buffer Object
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);	// Bind the object to the array
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexarray), vertexarray, GL_STATIC_DRAW);	// Allocates the memory of the vertices
+	glBufferData(GL_ARRAY_BUFFER, sizeof(trianglevertexarray), trianglevertexarray, GL_STATIC_DRAW);	// Allocates the memory of the vertices
 
 	ShaderInfo shaders[]={	// Create the shader specified by my initshaders 
 		{ GL_VERTEX_SHADER , "vertexshader.glsl"} ,
@@ -49,6 +66,56 @@ void triangle(){
 	glFlush();	// Makes sure the processes finish
 }
 
+void square(){
+	glClear(GL_COLOR_BUFFER_BIT);	// Clears the screen
+  
+	glGenVertexArrays(1, &vaoID);	// Generates object name for Vertex Array Objects
+	glBindVertexArray(vaoID);	// Bind the object to the array
+
+	glGenBuffers(1, &vboID);	// Generates object name for the Vertex Buffer Object
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);	// Bind the object to the array
+	glBufferData(GL_ARRAY_BUFFER, sizeof(squarevertexarray), squarevertexarray, GL_STATIC_DRAW);	// Allocates the memory of the vertices
+
+	ShaderInfo shaders[]={	// Create the shader specified by my initshaders 
+		{ GL_VERTEX_SHADER , "vertexshader.glsl"} ,
+		{ GL_FRAGMENT_SHADER , "fragmentshader2.glsl"},
+		{ GL_NONE , NULL} 
+	};
+
+	initShaders(shaders);	// Creates shaders
+  
+	glEnableVertexAttribArray(0);	// Enables the vertex attribute index 
+	glVertexAttribPointer(0,4,GL_FLOAT,GL_FALSE,0,(void*)0);	// Specified the start the vertice array used to the draw
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	// Draws array
+	glFlush();	// Makes sure the processes finish
+}
+
+void pentagon(){
+	glClear(GL_COLOR_BUFFER_BIT);	// Clears the screen
+  
+	glGenVertexArrays(1, &vaoID);	// Generates object name for Vertex Array Objects
+	glBindVertexArray(vaoID);	// Bind the object to the array
+
+	glGenBuffers(1, &vboID);	// Generates object name for the Vertex Buffer Object
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);	// Bind the object to the array
+	glBufferData(GL_ARRAY_BUFFER, sizeof(pentagonvertexarray), pentagonvertexarray, GL_STATIC_DRAW);	// Allocates the memory of the vertices
+
+	ShaderInfo shaders[]={	// Create the shader specified by my initshaders 
+		{ GL_VERTEX_SHADER , "vertexshader.glsl"} ,
+		{ GL_FRAGMENT_SHADER , "fragmentshader3.glsl"},
+		{ GL_NONE , NULL} 
+	};
+
+	initShaders(shaders);	// Creates shaders
+  
+	glEnableVertexAttribArray(0);	// Enables the vertex attribute index 
+	glVertexAttribPointer(0,5,GL_FLOAT,GL_FALSE,0,(void*)0);	// Specified the start the vertice array used to the draw
+
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 5);	// Draws array
+	glFlush();	// Makes sure the processes finish
+}
+
 // -----------------------------------
 // --- D R A W   F U N C T I O N S ---
 // -----------------------------------
@@ -60,11 +127,11 @@ void drawscene(){
 			glutPostRedisplay();	// Redraw the display
 			break;
 		case 1:
-			glutDisplayFunc(triangle);
+			glutDisplayFunc(square);
 			glutPostRedisplay();	// Redraw the display
 			break;
 		case 2:
-			glutDisplayFunc(triangle);
+			glutDisplayFunc(pentagon);
 			glutPostRedisplay();	// Redraw the display
 			break;
 	}
