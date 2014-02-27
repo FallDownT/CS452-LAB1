@@ -23,20 +23,20 @@ GLfloat trianglevertexarray[]={
 	-0.5f,-0.5f,0.0f
 };
 GLfloat squarevertexarray[]={
-	-0.5f,-0.5f,0.0f,
 	-0.5f,0.5f,0.0f,
+	-0.5f,-0.5f,0.0f,
 	0.5f,0.5f,0.0f,
 	0.5f,-0.5f,0.0f
 };
 GLfloat pentagonvertexarray[]={
-	-0.3f,-0.2f,0.0f,
-	-0.4f,0.0f,0.0f,
-	0.0f,-0.3f,0.0f,
-	0.3f,-0.2f,0.0f,
-	0.4f,0.0f,0.0f
+	-0.2939f,-0.4045f,0.0f,
+	-0.4755f,0.1545f,0.0f,
+	0.0f,0.5f,0.0f,
+	0.4755f,0.1545f,0.0f,
+	0.2939f,-0.4045f,0.0f
 };
 // Indices of triangle
-GLubyte indices[5]={0,1,2,3,4};
+GLubyte indices[3]={0,1,2};
 
 // -----------------------------------------
 // --- O B J E C T   G E N E R A T I O N ---
@@ -85,7 +85,7 @@ void square(){
 	initShaders(shaders);	// Creates shaders
   
 	glEnableVertexAttribArray(0);	// Enables the vertex attribute index 
-	glVertexAttribPointer(0,4,GL_FLOAT,GL_FALSE,0,(void*)0);	// Specified the start the vertice array used to the draw
+	glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);	// Specified the start the vertice array used to the draw
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);	// Draws array
 	glFlush();	// Makes sure the processes finish
@@ -110,7 +110,7 @@ void pentagon(){
 	initShaders(shaders);	// Creates shaders
   
 	glEnableVertexAttribArray(0);	// Enables the vertex attribute index 
-	glVertexAttribPointer(0,5,GL_FLOAT,GL_FALSE,0,(void*)0);	// Specified the start the vertice array used to the draw
+	glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);	// Specified the start the vertice array used to the draw
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 5);	// Draws array
 	glFlush();	// Makes sure the processes finish
